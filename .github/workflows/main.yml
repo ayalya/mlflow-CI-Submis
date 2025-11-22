@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
 env:
   CSV_URL: "project/train_data.csv"
   TARGET_VAR: "Loan_Status"
