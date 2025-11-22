@@ -4,6 +4,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 import numpy as np
+import argparse
 import sys
 import os
 import warnings
@@ -32,8 +33,13 @@ if __name__ == "__main__":
     )
 
     input_example = X_train[0:5]
-    n_neighbors = int(sys.argv[1]) if len(sys.argv) > 1 else 50
-    leaf_size   = int(sys.argv[2]) if len(sys.argv) > 2 else 35
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n_neighbors", type=int, default=50)
+    parser.add_argument("--leaf_size", type=int, default=30)
+    args = parser.parse_args()
+
+    n_neighbors = args.n_neighbors
+    leaf_size = args.leaf_size
 
     with mlflow.start_run():
         model = KNeighborsClassifier(n_neighbors=n_neighbors,
