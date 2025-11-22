@@ -45,7 +45,7 @@ jobs:
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          mlflow run project --env-manager=local
+          mlflow run project 
           
       # Save models to GitHub Repository
       - name: Get latest MLflow run_id
@@ -54,7 +54,7 @@ jobs:
           git config --global user.email "${{ secrets.EMAIL }}"
           git add mlruns//
           git commit -m "Run CI and save mlflow output"
-          git push origin main
+          git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
 
       - name: Install Python dependencies
         run: |
