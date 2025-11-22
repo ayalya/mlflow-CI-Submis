@@ -1,0 +1,10 @@
+artifact_location: file:///home/runner/work/mlflow-CI-Submis/mlflow-CI-Submis/mlruns/0/models/m-595c97cb3d7944ec9c5caf54ee5899cf/artifacts
+creation_timestamp: 1763843258988
+experiment_id: '0'
+last_updated_timestamp: 1763843261213
+model_id: m-595c97cb3d7944ec9c5caf54ee5899cf
+model_type: null
+name: model
+source_run_id: 946e1389d63e48d0aac792fb74027e0a
+status: 2
+status_message: null
