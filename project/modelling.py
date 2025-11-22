@@ -9,6 +9,9 @@ import sys
 import os
 import warnings
 
+# Ambil tracking URI dari environment (di-setting GitHub Actions)
+tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns")
+mlflow.set_tracking_uri(tracking_uri)
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
