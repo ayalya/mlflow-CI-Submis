@@ -14,14 +14,9 @@ if __name__ == "__main__":
     np.random.seed(40)
 
     # Read file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    base_dir = os.path.dirname(os.path.dirname(script_dir))
-
-    # folder dataset
-    preprocess_dir = os.path.join(base_dir, "LoanEligibilityDataset_preprocessing")
 
     # file yang ingin dibaca
-    file_path = os.path.join(preprocess_dir, "train_data.csv")
+    file_path = "train_data.csv"
     data = pd.read_csv(file_path)
 
     # Split data

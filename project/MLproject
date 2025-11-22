@@ -8,4 +8,4 @@ entry_points:
       n_estimators: {type: int, default: 50}
       max_depth: {type: int, default: 35}
       dataset : {type: string, default: "train_data.csv"}
-    command: "python modelling.py --n_neighbors {n_neighbors} --leaf_size {leaf_size} {dataset}"
+    command: "python modelling.py {n_neighbors} {leaf_size} {dataset}"
