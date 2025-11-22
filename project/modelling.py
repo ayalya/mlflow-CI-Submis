@@ -47,7 +47,7 @@ if __name__ == "__main__":
     input_example = X_train[:5]
 
     # MLflow Run
-    with mlflow.start_run():
+    with mlflow.start_run(nested=True):
 
         model = KNeighborsClassifier(
             n_neighbors=n_neighbors,
