@@ -32,13 +32,11 @@ if __name__ == "__main__":
     )
 
     input_example = X_train[0:5]
-    n_neighbors = 5
-    metric = 'minkowski'
-    leaf_size = 30
+    n_neighbors = int(sys.argv[1]) if len(sys.argv) > 1 else 50
+    leaf_size   = int(sys.argv[2]) if len(sys.argv) > 2 else 30
 
     with mlflow.start_run():
         model = KNeighborsClassifier(n_neighbors=n_neighbors,
-                                     metric=metric,
                                      leaf_size=leaf_size)
         model.fit(X_train, y_train)
 
