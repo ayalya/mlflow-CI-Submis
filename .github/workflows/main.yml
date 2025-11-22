@@ -11,7 +11,6 @@ on:
 env:
   CSV_URL: "project/train_data.csv"
   TARGET_VAR: "Loan_Status"
-  MLFLOW_TRACKING_URI: file:///${{ github.workspace }}/mlruns
  
 jobs:
   build:
@@ -38,10 +37,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow
 
-      - name: Set MLflow Tracking URI
-        run: |
+      # # Set MLflow Tracking URI (pakai dagshub)
+      # - name: Set MLflow Tracking URI
+      #   run: 
+      #     dagshub login --token ${{ secrets.dagshub }} 
           
-
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
@@ -62,7 +62,7 @@ jobs:
         
       - name: Upload to Google Drive
         env:
-          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}  # Mengambil kredensial dari GitHub Secrets
-          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}  # Mengambil kredensial dari GitHub Secrets
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
           python MLproject/upload_to_gdrive.py
