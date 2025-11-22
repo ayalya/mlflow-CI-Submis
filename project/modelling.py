@@ -8,11 +8,14 @@ import argparse
 import os
 import warnings
 
+# Ambil tracking URI dari environment (di-setting GitHub Actions)
+tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns")
+mlflow.set_tracking_uri(tracking_uri)
+
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
 
-    # Parse arguments (NO sys.argv)
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_neighbors", type=int, default=50)
     parser.add_argument("--leaf_size", type=int, default=100)
@@ -42,7 +45,7 @@ if __name__ == "__main__":
     input_example = X_train[:5]
 
     # MLflow Run
-    with mlflow.start_run(nested=True):
+    with mlflow.start_run():
 
         model = KNeighborsClassifier(
             n_neighbors=n_neighbors,
