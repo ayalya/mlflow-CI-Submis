@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Read file
 
     # file yang ingin dibaca
-    file_path = "train_data.csv"
+    file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "train_data.csv")
     data = pd.read_csv(file_path)
 
     # Split data
@@ -44,12 +44,6 @@ if __name__ == "__main__":
 
         pred = model.predict(X_test)
 
-        mlflow.sklearn.log_model(
-            sk_model = model,
-            artifact_path = 'model',
-            input_example=input_example
-        )
-
         model.fit(X_train, y_train)
 
         # Metrics
@@ -57,3 +51,5 @@ if __name__ == "__main__":
 
         # Log metrics ke MLflow
         mlflow.log_metric("accuracy", accuracy)
+        
+        mlflow.sklearn.log_model(model, "model")
