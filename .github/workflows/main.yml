@@ -43,8 +43,8 @@ jobs:
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          mlflow run project --env-manager=local 
-
+          mlflow run project 
+          
       # Save models to GitHub Repository
       - name: Get latest MLflow run_id
         run: |
