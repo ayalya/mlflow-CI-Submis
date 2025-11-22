@@ -1,0 +1,14 @@
+artifact_uri: file:///home/runner/work/mlflow-CI-Submis/mlflow-CI-Submis/mlruns/0/946e1389d63e48d0aac792fb74027e0a/artifacts
+end_time: 1763843261489
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 946e1389d63e48d0aac792fb74027e0a
+run_name: carefree-mare-864
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763843257560
+status: 3
+tags: []
+user_id: runner

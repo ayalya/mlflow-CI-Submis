@@ -1,0 +1,39 @@
+artifact_path: file:///home/runner/work/mlflow-CI-Submis/mlflow-CI-Submis/mlruns/0/models/m-2ba367327fe04917ac37c82785031063/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+is_signature_from_type_hint: false
+mlflow_version: 3.6.0
+model_id: m-2ba367327fe04917ac37c82785031063
+model_size_bytes: 23469
+model_uuid: m-2ba367327fe04917ac37c82785031063
+prompts: null
+run_id: 2e8e6c16c2544af0873769203acab4a9
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "long", "name": "Married", "required": true}, {"type": "double",
+    "name": "Dependents", "required": true}, {"type": "long", "name": "Self_Employed",
+    "required": true}, {"type": "double", "name": "Applicant_Income", "required":
+    true}, {"type": "double", "name": "Coapplicant_Income", "required": true}, {"type":
+    "double", "name": "Loan_Amount", "required": true}, {"type": "double", "name":
+    "Loan_Amount_Term", "required": true}, {"type": "double", "name": "Credit_History",
+    "required": true}]'
+  outputs: '[{"type": "long", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-11-22 21:32:07.764010'
