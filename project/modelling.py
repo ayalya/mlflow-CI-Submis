@@ -32,6 +32,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_neighbors", type=int, default=50)
     parser.add_argument("--leaf_size", type=int, default=100)
+    parser.add_argument("--dataset", type=str, default="train_data.csv")
     args = parser.parse_args()
 
     n_neighbors = args.n_neighbors
