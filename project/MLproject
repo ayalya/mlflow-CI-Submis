@@ -1,11 +1,30 @@
-name: latihan-cs-mlflow
- 
-conda_env: conda.yaml
- 
-entry_points:
-  main:
-    parameters:
-      n_estimators: {type: int, default: 5}
-      max_depth: {type: int, default: 35}
-      dataset : {type: string, default: "train_data.csv"}
-        command: "python modelling.py --n_neighbors {n_neighbors} --leaf_size {leaf_size} {dataset}"
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 2.19.0
+model_size_bytes: 21691
+model_uuid: 8152db3ef913434696197fc5e32f3f38
+run_id: 41a42c63459b4c6e9a7b9d7b57f94105
+signature:
+  inputs: '[{"type": "long", "name": "Married", "required": true}, {"type": "double",
+    "name": "Dependents", "required": true}, {"type": "long", "name": "Self_Employed",
+    "required": true}, {"type": "double", "name": "Applicant_Income", "required":
+    true}, {"type": "double", "name": "Coapplicant_Income", "required": true}, {"type":
+    "double", "name": "Loan_Amount", "required": true}, {"type": "double", "name":
+    "Loan_Amount_Term", "required": true}, {"type": "double", "name": "Credit_History",
+    "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+utc_time_created: '2025-11-22 06:07:56.740233'
