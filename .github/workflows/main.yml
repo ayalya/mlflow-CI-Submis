@@ -45,7 +45,7 @@ jobs:
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          python modelling.py --n_neighbors 50 --leaf_size 100 --dataset train_data.csv
+          mlflow run project --env-manager=local
           
       # Save models to GitHub Repository
       - name: Get latest MLflow run_id
