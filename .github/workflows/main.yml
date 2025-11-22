@@ -11,6 +11,7 @@ on:
 env:
   CSV_URL: "project/train_data.csv"
   TARGET_VAR: "Loan_Status"
+  MLFLOW_TRACKING_URI: file:///${{ github.workspace }}/mlruns
  
 jobs:
   build:
@@ -39,8 +40,8 @@ jobs:
 
       - name: Set MLflow Tracking URI
         run: |
-          echo "MLFLOW_TRACKING_URI=file:./mlruns" >> $GITHUB_ENV
-                
+          
+
       # Run as a mlflow project
       - name: Run mlflow project
         run: |

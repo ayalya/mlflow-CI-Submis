@@ -9,15 +9,15 @@ import os
 import warnings
 
 # Ambil tracking URI dari environment (di-setting GitHub Actions)
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "mlruns")
+mlflow.set_tracking_uri(mlflow_tracking_uri)
+mlflow.set_experiment("Submission Membangun Sistem Machine Learning - Alya Fauzia")
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
 
-    # ===============================
     # Parse arguments (NO sys.argv)
-    # ===============================
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_neighbors", type=int, default=50)
     parser.add_argument("--leaf_size", type=int, default=100)
