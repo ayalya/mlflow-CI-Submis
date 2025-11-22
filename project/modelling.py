@@ -9,6 +9,7 @@ import sys
 import os
 import warnings
 
+
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
@@ -29,8 +30,8 @@ if __name__ == "__main__":
 
     input_example = X_train[0:5]
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n_neighbors", type=int, default=505)
-    parser.add_argument("--leaf_size", type=int, default=30)
+    parser.add_argument("--n_neighbors", type=int, default=50)
+    parser.add_argument("--leaf_size", type=int, default=35)
     args = parser.parse_args()
 
     n_neighbors = args.n_neighbors
