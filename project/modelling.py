@@ -88,9 +88,10 @@ if __name__ == "__main__":
 
         # Save model to remote MLflow (DagsHub)
         mlflow.sklearn.log_model(
-            model,
-            artifact_path="model",
+            sk_model=model,
+            name="model",
             input_example=input_example
         )
+
 
         print("Run Done! Metrics ada di DagHub")
