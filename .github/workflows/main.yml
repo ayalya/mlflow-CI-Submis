@@ -58,3 +58,6 @@ jobs:
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
           python project/upload_to_gdrive.py
+          git add .
+          git commit -m "Run MLflow roject success!" || echo "No changes to commit"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
