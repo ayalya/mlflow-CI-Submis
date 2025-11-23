@@ -7,11 +7,12 @@ import numpy as np
 import argparse
 import os
 import warnings
+from dagshub import DAGsHubLogger  # NEW
 
-# Ambil tracking URI dari environment (di-setting GitHub Actions)
-# Set tracking ke DagsHub
-mlflow.set_tracking_uri("https://dagshub.com/alyafauziaaz20/mlflow-CI-Submis.mlflow")
-# Set experiment
+# Pakai tracking URI dari environment GitHub Actions
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+
+# Set eksperimen
 mlflow.set_experiment("Submission Membangun Sistem Machine Learning - Alya Fauzia")
 
 if __name__ == "__main__":
@@ -28,15 +29,11 @@ if __name__ == "__main__":
     leaf_size = args.leaf_size
     dataset_name = args.dataset
 
-    # Build dataset path
     script_dir = os.path.dirname(os.path.abspath(__file__))
     dataset_path = os.path.join(script_dir, dataset_name)
+
     data = pd.read_csv(dataset_path)
 
-    # Load dataset
-    data = pd.read_csv(dataset_path)
-
-    # Split data
     X_train, X_test, y_train, y_test = train_test_split(
         data.drop("Loan_Status", axis=1),
         data["Loan_Status"],
@@ -48,6 +45,10 @@ if __name__ == "__main__":
 
     # MLflow Run
     with mlflow.start_run():
+
+        # Log parameter (penting!)
+        mlflow.log_param("n_neighbors", n_neighbors)
+        mlflow.log_param("leaf_size", leaf_size)
 
         model = KNeighborsClassifier(
             n_neighbors=n_neighbors,
@@ -63,7 +64,6 @@ if __name__ == "__main__":
         precision = precision_score(y_test, pred, average="macro")
         recall = recall_score(y_test, pred, average="macro")
 
-        # Log metrics
         mlflow.log_metric("accuracy", accuracy)
         mlflow.log_metric("f1_score", f1)
         mlflow.log_metric("precision", precision)
