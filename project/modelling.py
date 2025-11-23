@@ -9,8 +9,10 @@ import os
 import warnings
 
 # Ambil tracking URI dari environment (di-setting GitHub Actions)
-tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns")
-mlflow.set_tracking_uri(tracking_uri)
+# Set tracking ke DagsHub
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+# Set experiment
+mlflow.set_experiment("Submission Membangun Sistem Machine Learning - Alya Fauzia")
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
