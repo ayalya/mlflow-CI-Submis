@@ -7,12 +7,17 @@ import numpy as np
 import argparse
 import os
 import warnings
-from dagshub import DAGsHubLogger  # NEW
+from dagshub import DAGsHubLogger
 
-# Pakai tracking URI dari environment GitHub Actions
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+# ====== FORCE MLflow to use DAGSHUB ======
+tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+assert tracking_uri is not None, "ERROR: MLFLOW_TRACKING_URI tidak ditemukan!"
+mlflow.set_tracking_uri(tracking_uri)
 
-# Set eksperimen
+# Disable autolog (agar tidak membuat folder mlruns/)
+mlflow.autolog(disable=True)
+
+# Set experiment
 mlflow.set_experiment("Submission Membangun Sistem Machine Learning - Alya Fauzia")
 
 if __name__ == "__main__":
@@ -41,12 +46,17 @@ if __name__ == "__main__":
         random_state=42
     )
 
-    input_example = X_train[:5]
+    # input_example harus float
+    input_example = X_train.head(5).astype(float)
 
-    # MLflow Run
-    with mlflow.start_run():
+    # MLflow Run (remote only)
+    with mlflow.start_run() as run:
 
-        # Log parameter (penting!)
+        # DagsHub logger (optional tapi recommended)
+        logger = DAGsHubLogger()
+        logger.log_hyperparams({"n_neighbors": n_neighbors, "leaf_size": leaf_size})
+
+        # Log parameter
         mlflow.log_param("n_neighbors", n_neighbors)
         mlflow.log_param("leaf_size", leaf_size)
 
@@ -69,11 +79,18 @@ if __name__ == "__main__":
         mlflow.log_metric("precision", precision)
         mlflow.log_metric("recall", recall)
 
-        # Log model
+        logger.log_metrics({
+            "accuracy": accuracy,
+            "f1_score": f1,
+            "precision": precision,
+            "recall": recall
+        })
+
+        # Save model to remote MLflow (DagsHub)
         mlflow.sklearn.log_model(
             model,
-            "model",
+            artifact_path="model",
             input_example=input_example
         )
 
-        print("Run selesai! Metrics sudah dicatat di MLflow.")
+        print("Run Done! Metrics ada di DagHub")
