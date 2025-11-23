@@ -26,7 +26,8 @@ jobs:
       # Install Dependencies
       - name: Install ML dependencies
         run: |
-          python -m pip install --upgrade pip
+          pip install --upgrade pip
+          pip install setuptools==68.0.0 wheel==0.41.2
           pip install mlflow==2.11.3 dagshub scikit-learn pandas numpy
 
       # Set MLflow Tracking
