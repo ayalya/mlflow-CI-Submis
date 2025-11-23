@@ -10,7 +10,7 @@ import warnings
 
 # Ambil tracking URI dari environment (di-setting GitHub Actions)
 # Set tracking ke DagsHub
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+mlflow.set_tracking_uri("https://dagshub.com/alyafauziaaz20/mlflow-CI-Submis.mlflow")
 # Set experiment
 mlflow.set_experiment("Submission Membangun Sistem Machine Learning - Alya Fauzia")
 

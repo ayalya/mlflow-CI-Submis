@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+
 env:
   CSV_URL: "project/train_data.csv"
   TARGET_VAR: "Loan_Status"
@@ -17,48 +18,41 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
  
-      # Setup Python 3.12.7
       - name: Set up Python 3.12.7
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3
         with:
           python-version: "3.12.7"
-      
-      # Check Env Variables
-      - name: Check Env
-        run: |
-          echo $CSV_URL
- 
-      # Install mlflow
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mlflow
-          
-      # Set MLflow Tracking URI
+          pip install mlflow dagshub
+
+      - name: Login to DagsHub
+        run: |
+          dagshub login --username "${{ secrets.DAGSHUB_USER }}" --token "${{ secrets.DAGSHUB_TOKEN }}"
+
       - name: Set MLflow Tracking URI
         run: |
-          echo "MLFLOW_TRACKING_URI=https://dagshub.com/${{ secrets.DAGSHUB_USER }}/NAMA_REPO.mlflow" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_URI=https://dagshub.com/${{ secrets.DAGSHUB_USER }}/mlflow-CI-Submis.mlflow" >> $GITHUB_ENV
           echo "MLFLOW_TRACKING_USERNAME=${{ secrets.DAGSHUB_USER }}" >> $GITHUB_ENV
           echo "MLFLOW_TRACKING_PASSWORD=${{ secrets.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
-          
-      # Run as a mlflow project
+
       - name: Run mlflow project
         run: |
           mlflow run project --env-manager=local
-          
-      # Save models to GitHub Repository
-      - name: Get latest MLflow run_id
+
+      - name: Save mlflow artifacts
         run: |
           git config --global user.name "${{ secrets.USERNAME }}"
           git config --global user.email "${{ secrets.EMAIL }}"
-          git add mlruns//
-          git commit -m "Run CI and save mlflow output"
+          git add mlruns/
+          git commit -m "Run CI and save mlflow output" || echo "No changes to commit"
           git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
 
-      - name: Install Python dependencies
+      - name: Install GDrive libs
         run: |
           pip install --upgrade google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
         
@@ -67,4 +61,4 @@ jobs:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
-          python MLproject/upload_to_gdrive.py
+          python upload_to_gdrive.py
