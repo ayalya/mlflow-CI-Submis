@@ -36,19 +36,19 @@ jobs:
           echo "MLFLOW_TRACKING_USERNAME=${{ secrets.DAGSHUB_USER }}" >> $GITHUB_ENV
           echo "MLFLOW_TRACKING_PASSWORD=${{ secrets.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Run training Python script
+      - name: Run mlflow project
         run: |
           python project/modelling.py
 
-      - name: Save mlflow artifacts
-        run: |
-          git config --global user.name "${{ secrets.USERNAME }}"
-          git config --global user.email "${{ secrets.EMAIL }}"
-          git add mlruns/
-          git commit -m "Run CI and save mlflow output" || echo "No changes to commit"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
+      # - name: Save mlflow artifacts
+      #   run: |
+      #     git config --global user.name "${{ secrets.USERNAME }}"
+      #     git config --global user.email "${{ secrets.EMAIL }}"
+      #     git add mlruns/
+      #     git commit -m "Run CI and save mlflow output" || echo "No changes to commit"
+      #     git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
 
-      - name: Install GDrive libs
+      - name: Install Python dependecies
         run: |
           pip install --upgrade google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
         
