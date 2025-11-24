@@ -50,6 +50,9 @@ jobs:
           RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
+          git add mlruns//
+          git commit -m "Run CI and save mlflow output"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
 
       # Upload to Google Drive
       - name: Install GDrive libraries
@@ -67,6 +70,4 @@ jobs:
           git config --global user.name "${{ secrets.USERNAME }}"
           git config --global user.email "${{ secrets.EMAIL }}"
 
-          git add .
-          git commit -m "CI run successful — MLflow project executed!" || echo "No changes to commit"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/ayalya/mlflow-CI-Submis.git main
+          echo "Sucess upload model to gdrive"
