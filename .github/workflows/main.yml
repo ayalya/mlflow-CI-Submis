@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12.7"
 
       # Install Dependencies
-      - name: Install ML dependencies
+      - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install setuptools==68.0.0 wheel==0.41.2
@@ -44,6 +44,12 @@ jobs:
       - name: Run MLflow Project
         run: |
           python project/modelling.py
+
+      - name: Get latest MLflow run_id
+        run: |
+          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Latest run_id: $RUN_ID"
 
       # Upload to Google Drive
       - name: Install GDrive libraries
