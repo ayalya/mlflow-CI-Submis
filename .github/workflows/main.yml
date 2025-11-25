@@ -76,7 +76,7 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          mlflow models build-docker --model-uri "runs:/#RUN_ID" --name "cc"
+          mlflow models build-docker --model-uri "runs:/#RUN_ID" --name "submis-mlflow"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
