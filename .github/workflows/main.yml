@@ -31,7 +31,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install setuptools==68.0.0 wheel==0.41.2
-          pip install mlflow dagshub scikit-learn pandas numpy
+          pip install mlflow==2.19.0 dagshub scikit-learn pandas numpy
 
       # Set MLflow Tracking
       - name: Configure MLflow Tracking URI
