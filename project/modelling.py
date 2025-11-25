@@ -95,7 +95,7 @@ if __name__ == "__main__":
             sk_model=model,
             artifact_path="model",
             input_example=input_example,
-            conda_env="project\conda.yaml"
+            conda_env="conda.yaml"
         )
 
         # Buka file txt
