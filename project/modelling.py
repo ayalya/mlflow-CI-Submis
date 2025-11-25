@@ -52,6 +52,10 @@ if __name__ == "__main__":
     # MLflow Run (remote only)
     with mlflow.start_run() as run:
 
+        # Mengambil RUN_ID di DagsHub
+        run_id = run.info.run_id
+        print("RUN_ID:", run_id)
+
         # DagsHub logger (optional tapi recommended)
         logger = DAGsHubLogger()
         logger.log_hyperparams({"n_neighbors": n_neighbors, "leaf_size": leaf_size})
@@ -93,5 +97,8 @@ if __name__ == "__main__":
             input_example=input_example
         )
 
+        # Buka file txt
+        with open("run_id.txt", "w") as f:
+            f.write(run_id)
 
         print("Run Done! Metrics ada di DagHub")

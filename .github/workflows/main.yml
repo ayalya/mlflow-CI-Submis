@@ -45,7 +45,7 @@ jobs:
         run: |
           python project/modelling.py
 
-      - name: Read run_id from file
+      - name: Get latest MLflow run_id
         run: |
           RUN_ID=$(cat run_id.txt)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
