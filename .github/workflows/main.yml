@@ -26,11 +26,6 @@ jobs:
         with:
           python-version: "3.12.7"
 
-      # Check Env Variables
-      - name: Check Env
-        run: |
-          echo $CSV_URL
-
       # Install Dependencies
       - name: Install dependencies
         run: |
@@ -50,41 +45,38 @@ jobs:
         run: |
           python project/modelling.py
 
-      - name: Get latest MLflow run_id
+      - name: Read run_id from file
         run: |
-          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+          RUN_ID=$(cat run_id.txt)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Latest run_id: $RUN_ID"
+          echo "Run ID Loaded: $RUN_ID"
 
       # Upload to Google Drive
       - name: Install GDrive libraries
         run: |
           pip install --upgrade google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
 
-      - name: Upload MLflow Artifacts to Google Drive & Commit
+      - name: Upload MLflow Artifacts to Google Drive
         env:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python project/upload_to_gdrive.py
-          
-          git config --global user.name "${{ secrets.USERNAME }}"
-          git config --global user.email "${{ secrets.EMAIL }}"
+          echo "Success upload model to Google Drive"
 
-          echo "Sucess upload model to gd"
-
+      # Build Docker Model
       - name: Build Docker Model
         run: |
           echo "Building docker model for run: $RUN_ID"
           mlflow models build-docker --model-uri "runs:/${RUN_ID}/model" --name "submis-mlflow"
 
+      # Login Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
-        with: |
+        with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      
+
       - name: Tag Docker Images
         run: |
           docker tag submis-mlflow ${{ secrets.DOCKER_HUB_USERNAME }}/submis-mlflow:latest
@@ -92,4 +84,3 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/submis-mlflow:latest
-        
