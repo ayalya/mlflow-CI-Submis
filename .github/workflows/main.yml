@@ -76,7 +76,8 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          mlflow models build-docker --model-uri "runs:/#RUN_ID" --name "submis-mlflow"
+          echo "Building docker model for run: $RUN_ID"
+          mlflow models build-docker --model-uri "runs:/${RUN_ID}/model" --name "submis-mlflow"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -86,9 +87,9 @@ jobs:
       
       - name: Tag Docker Images
         run: |
-          docker tag submis-mlflow ${{ secrets.DOCKER_HUB_USERNAME}}/submis-mlflow:latest
-      
+          docker tag submis-mlflow ${{ secrets.DOCKER_HUB_USERNAME }}/submis-mlflow:latest
+
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_HUB_ACCESS_USERNAME}}/submis-mlflow:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/submis-mlflow:latest
         
